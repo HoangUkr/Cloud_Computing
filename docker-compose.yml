@@ -2,6 +2,7 @@ version: "3.3"
 services: 
   web:
     build: ./Lab
+    image: hoangukraine/crmphamprotsiuk:latest
     command: gunicorn Product.wsgi:application --bind 0.0.0.0:8000 --reload
     tty: true
     volumes: 
