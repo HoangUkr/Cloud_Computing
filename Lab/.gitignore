@@ -1,0 +1,8 @@
+accounts/__pycache__/
+accounts/migrations/
+accounts/__init__.py
+Product/__pycache__/
+Product/__init__.py
+db.sqlite3
+db_django/
+staticfiles/

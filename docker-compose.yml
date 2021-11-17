@@ -1,0 +1,39 @@
+version: "3.3"
+services: 
+  web:
+    build: ./Lab
+    command: gunicorn Product.wsgi:application --bind 0.0.0.0:8000 --reload
+    tty: true
+    volumes: 
+      - ./Lab/:/crm/
+    environment: 
+      - DEBUG=1
+    expose: 
+      - 8000
+    ports:
+      - '8000:8000'
+    depends_on: 
+      - db
+  db:
+    image: mysql:5.7
+    ports: 
+      - '3306:3306'
+    expose: 
+      - '3306'
+    environment: 
+      MYSQL_DATABASE: 'djangodatabase'
+      MYSQL_USER: 'dbadmin'
+      MYSQL_PASSWORD: '12345678'
+      MYSQL_ROOT_PASSWORD: '12345678'
+    restart: always
+    volumes: 
+      - ./Lab/db_django:/var/lib/mysql
+  nginx:
+    build: ./nginx
+    volumes: 
+      - ./Lab/static:/var/static
+    ports:
+      - 80:80
+    restart: always
+    depends_on: 
+      - web
